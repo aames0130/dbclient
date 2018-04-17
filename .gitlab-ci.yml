@@ -1,0 +1,44 @@
+# Define your task #
+variables:
+  projectName: "dbclient:1.1.2"
+
+cache:
+   paths:
+     - target/
+
+stages:
+ - test
+ - build
+ - report
+ - deploy
+
+
+job_test:
+ stage: test
+ script:
+  - mvn clean test
+  - cat target/site/jacoco/index.html
+ except:
+ - tags
+
+job_build:
+ stage: build
+ script:
+  - mvn package -DskipTests
+ except:
+  - tags
+
+job_report:
+ stage: report
+ script:
+  - mvn site site:deploy
+ allow_failure: true
+ except:
+  - tags
+
+job_deploy:
+ stage: deploy
+ script:
+  - mvn source:jar deploy -DskipTests
+ only:
+  - master

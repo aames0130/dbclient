@@ -1,0 +1,74 @@
+# Simulate delta data to insert
+#
+# name : required
+# the job name, you can call DBClient.deltaStop(name) to stop a running job
+#
+# zoneId : optional
+# valid zoneId value can reference to https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html
+# UTC is also valid value in zoneId.
+# If zoneId is not provided, it will get your system time zone as zoneId
+#
+# ds: required
+# the data source name in dbselect-config.yaml, we use this to get connection from DB
+#
+# table: required
+# the table name
+#
+# number: required
+# how many rows will be inserted to table.
+#
+# duration: required
+# every 'duration' second execute one time.
+# after execute 'number' times, job will stopped.
+# min value of duration is 0.01
+#
+# columnStr: required
+# the table columns
+#
+# values: required
+# the value you want to insert to table, the number of values must equals to the number of columnStr
+#
+# You can specify dynamic variable in values
+# dynamic value always starts with $
+#
+# $PK_INT to generate a primary key with integer type start from 1
+# $PK_INT(5) to generate a primary key with integer type start from 6
+#
+# $VAR_INT to generate a random integer
+# $VAR_INT+ to generate a random positive integer
+# $VAR_INT|-1, 2, 3| to generate a integer -1, 2 or 3
+# $VAR_INT|1~10| to generate a random integer from 1 to 9
+# $VAR_INT|8| is invalid, if you want to generate number 8, just put 8 in value
+#
+#
+# $VAR_FLT to generate a random float
+# $VAR_FLT+ to generate a random positive float
+# $VAR_FLT|1.1,2.7,3.2| to generate a float 1.1, 2.7 or 3.2
+# $VAR_FLT|1.0| is invalid, if you want to generate number 1.0, just put 1.0 in value
+#
+#
+# $VAR_STR to generate a random string with 5 characters
+# $VAR_STR(7) to generate a random string with 7 characters
+# $VAR_STR|A,BB,CCC| to generate a string A, BB, or CCC
+#
+# $VAR_TIME to generate a random time
+# $VAR_TIME|2017-01-04T12:12:12~now|  to generate a random time from 2017-01-04T12:12:12 to now
+# $VAR_TIME|now-5s~now|               to generate a random time from 5 seconds from now to now
+# $VAR_TIME|now-5m~now|               to generate a random time from 5 minutes from now to now
+# $VAR_TIME|now-5h~now|               to generate a random time from 5 hours from now to now
+# $VAR_TIME|now-5d~now|               to generate a random time from 5 days from now to now
+# $VAR_TIME|2017-1-04T12:12:12~now|   is invalid, month must have 2 digit
+# $VAR_TIME|2017-01-4T12:12:12~now|   is invalid, day must have 2 digit
+#
+# $VAR_SQL|SELECT CustomerNumber FROM Customer.dbo.NewEggCustomer WHERE LoginTimer > '2017-02-22 20:43:50'|
+#
+#
+!delta-data
+name: test
+zoneId: PST
+ds: DB1
+table: dbo.Customer
+number: 20
+duration: 30
+columnStr: Id, FirstName, LastName, Age
+values: ['$PK_INT', '$VAR_STR', '$VAR_STR|Jordan,Obama,Jackson,Durden,Bush|', '$VAR_INT|30-50|']

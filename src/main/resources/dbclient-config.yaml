@@ -1,0 +1,19 @@
+# Main config file of DBClient, must have
+#
+# DBType can be SQLServer, MySQL or MariaDB
+#
+# maxThreadNum means how many thread can share the same DB connection in the same time.
+# checkDelay and checkPeriod is optional.
+# DBConnectionManager will check
+#
+!dbclient-config
+DBType: SQLServer
+maxThreadNum: 10
+#checkDelay: 300
+#checkPeriod: 60
+dataSourceList:
+ - name: DB1
+   url: 'jdbc:sqlserver://127.0.0.1'
+   username: user
+   passwd: 0123456
+   poolSize: 10
