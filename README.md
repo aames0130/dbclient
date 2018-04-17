@@ -1,10 +1,4 @@
 # DBClient
-
-| Branch        | Coverage       |
-|:-------------:|:--------------:|
-| master        |[![coverage report](http://ST01MB01:8085/module/dbclient/badges/master/coverage.svg?private_token=ry-xV_k5zCbCyN-AVQoD)](http://ST01MB01:8085/module/dbclient/commits/master)|
-| dev           |[![coverage report](http://ST01MB01:8085/module/dbclient/badges/dev/coverage.svg?private_token=ry-xV_k5zCbCyN-AVQoD)](http://ST01MB01:8085/module/dbclient/commits/dev)|
-
 DBClient make basic DB operation easier, including query, insert, update, delete and prepare statement.  
 You don't have to worry about DB connection management and exception handleing.  
 Try it !!  
